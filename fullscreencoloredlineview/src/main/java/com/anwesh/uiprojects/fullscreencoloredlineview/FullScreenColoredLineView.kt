@@ -38,11 +38,11 @@ fun Canvas.drawFullScreenColoredLine(scale : Float, w : Float, h : Float, paint 
     val sf2 : Float = sf.divideScale(1, 2)
     drawDoubleCallback {
         scale(it, 1f)
-        drawLine(0f, 0f, w * sf1 * 0.5f, 0f, paint)
+        drawLine(-w / 2, 0f, - w / 2 + w * sf1 * 0.5f, 0f, paint)
     }
     drawDoubleCallback {
         scale(1F, it)
-        drawLine(0f, 0f, 0f, h * sf2 * 0.5f, paint)
+        drawLine(0f, -h / 2, 0f, - h / 2 + h * sf2 * 0.5f, paint)
     }
 }
 
