@@ -183,4 +183,27 @@ class FullScreenColoredLineView(ctx : Context) : View(ctx) {
             curr.startUpdating(cb)
         }
     }
+
+    data class Renderer(var view : FullScreenColoredLineView) {
+
+        private val animator : Animator = Animator(view)
+        private val fscl : FullScreenColoredLine = FullScreenColoredLine(0)
+        private val paint : Paint = Paint(Paint.ANTI_ALIAS_FLAG)
+
+        fun draw(canvas : Canvas) {
+            canvas.drawColor(backColor)
+            fscl.draw(canvas, paint)
+            animator.animate {
+                fscl.update {
+                    animator.stop()
+                }
+            }
+        }
+
+        fun handleTap() {
+            fscl.startUpdating {
+                animator.start()
+            }
+        }
+    }
 }
