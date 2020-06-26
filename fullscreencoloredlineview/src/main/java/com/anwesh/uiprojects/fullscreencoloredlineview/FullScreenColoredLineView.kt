@@ -208,4 +208,12 @@ class FullScreenColoredLineView(ctx : Context) : View(ctx) {
             }
         }
     }
+
+    companion object {
+        fun create(activity : Activity) : FullScreenColoredLineView {
+            val view : FullScreenColoredLineView = FullScreenColoredLineView(activity)
+            activity.setContentView(view)
+            return view
+        }
+    }
 }
