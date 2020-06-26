@@ -50,6 +50,8 @@ fun Canvas.drawFSCLNode(i : Int, scale : Float, paint : Paint) {
     val w : Float = width.toFloat()
     val h : Float = height.toFloat()
     paint.color = Color.parseColor(colors[i])
+    paint.strokeCap = Paint.Cap.ROUND
+    paint.strokeWidth = Math.min(w, h) / strokeFactor
     save()
     translate(w / 2, h / 2)
     drawFullScreenColoredLine(scale, w, h, paint)
