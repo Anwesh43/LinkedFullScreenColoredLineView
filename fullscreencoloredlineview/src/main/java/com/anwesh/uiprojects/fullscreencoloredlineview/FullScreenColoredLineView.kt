@@ -23,3 +23,35 @@ fun Int.inverse() : Float = 1f / this
 fun Float.maxScale(i : Int, n : Int) : Float = Math.max(0f, this - i * n.inverse())
 fun Float.divideScale(i : Int, n : Int) : Float = Math.min(n.inverse(), maxScale(i, n)) * n
 fun Float.sinify() : Float = Math.sin(this * Math.PI).toFloat()
+
+fun Canvas.drawDoubleCallback(cb : ( Float) -> Unit) {
+    for (j in 0..(parts - 1)) {
+        save()
+        cb( 1f - 2 * j)
+        restore()
+    }
+}
+
+fun Canvas.drawFullScreenColoredLine(scale : Float, w : Float, h : Float, paint : Paint) {
+    val sf : Float = scale.sinify()
+    val sf1 : Float = sf.divideScale(0, 2)
+    val sf2 : Float = sf.divideScale(1, 2)
+    drawDoubleCallback {
+        scale(it, 1f)
+        drawLine(0f, 0f, w * sf1 * 0.5f, 0f, paint)
+    }
+    drawDoubleCallback {
+        scale(1F, it)
+        drawLine(0f, 0f, 0f, h * sf2 * 0.5f, paint)
+    }
+}
+
+fun Canvas.drawFSCLNode(i : Int, scale : Float, paint : Paint) {
+    val w : Float = width.toFloat()
+    val h : Float = height.toFloat()
+    paint.color = Color.parseColor(colors[i])
+    save()
+    translate(w / 2, h / 2)
+    drawFullScreenColoredLine(scale, w, h, paint)
+    restore()
+}
